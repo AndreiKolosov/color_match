@@ -50,7 +50,7 @@ function setBcgColor(element, shade) {
 }
 
 function copyToClipboard(text) {
-  return navigator.clipboard.write(text);
+  return navigator.clipboard.writeText(text);
 }
 
 function setColorsToHash(colors = []) {
