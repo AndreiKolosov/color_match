@@ -1,0 +1,122 @@
+@import url("./vendor/fonts/fonts.css");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.content { 
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.matcher {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content 1fr;
+  grid-template-areas: 
+  'title'
+  'container';
+}
+
+.matcher__title {
+  position: fixed;
+  top: 20px ;
+  grid-area: title;
+  justify-self: center;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  letter-spacing: 0.04rem; 
+  animation: flicker 2.5s linear infinite;
+}
+
+.matcher__container {
+  grid-area: container;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr;
+}
+
+.matcher__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.matcher__color-code {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease-in;
+}
+
+.matcher__color-code:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.matcher__btn {
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  transition: background 0.3s ease-in;
+}
+
+
+.matcher__btn-icon {
+  min-width: 100%;
+  min-height: 100%;
+  display: block;
+  mask-image: url("./images/icons/lock-open-solid.svg");
+  -webkit-mask-box-image: url("./images/icons/lock-open-solid.svg");
+  background-color: #fff;
+  transition: transform 0.4s ease-in;
+}
+
+.lock {
+  mask-image: url("./images/icons/lock-solid.svg");
+  -webkit-mask-box-image: url("./images/icons/lock-solid.svg");
+}
+
+
+.matcher__btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.matcher__btn:hover .matcher__btn-icon {
+  transform: scale(1.1);
+}
+
+@keyframes flicker {
+    0% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.3;
+    }
+}
