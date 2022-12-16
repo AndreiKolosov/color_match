@@ -1,0 +1,22 @@
+@keyframes gradientRotate {
+  from {
+    filter: hue-rotate(0)
+  }
+  to{
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes flicker {
+    0% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.3;
+    }
+}

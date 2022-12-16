@@ -1,3 +1,5 @@
+import './pages/index.css';
+
 const pageTitle = document.querySelector('.matcher__title');
 const columns = document.querySelectorAll('.matcher__column');
 
@@ -14,11 +16,13 @@ document.addEventListener('click', (e) => {
   if (type === 'lock') {
     const node = e.target.tagName.toLowerCase() === 'i' ? e.target : e.target.children[0];
 
-    node.classList.toggle('lock')
+    node.classList.toggle('lock');
   } else if (type === 'hex-code') {
-    copyToClipboard(e.target.textContent);
+    const colorCode = e.target.textContent;
+    copyToClipboard(colorCode);
+    e.target.textContent = 'Copied !'
+    const timer = setTimeout(() => e.target.textContent = colorCode, 1500);
   }
-
 });
 
 function hexToRGB(h) {
@@ -40,14 +44,13 @@ function hexToRGB(h) {
   }
 
   // returns rgb color in format 'rgb(r,g,b)'
-  // return 'rgb(' + +r + ',' + +g + ',' + +b + ')'; 
+  // return 'rgb(' + +r + ',' + +g + ',' + +b + ')';
 
   return [+r, +g, +b];
 }
 
 function rgbToHsl(rgb) {
-
-  let [ r, g, b ] = rgb;
+  let [r, g, b] = rgb;
 
   (r /= 255), (g /= 255), (b /= 255);
   var max = Math.max(r, g, b),
@@ -78,13 +81,12 @@ function rgbToHsl(rgb) {
   return [h, s, l];
 }
 
-function calcColorLuminance (hexColor) {
+function calcColorLuminance(hexColor) {
   const rgb = hexToRGB(hexColor); // [r, g, b]
   const hsl = rgbToHsl(rgb); // [h, s, l]
 
   return hsl[2]; // l from hsl - lightness
 }
-
 
 function generateRandomColor() {
   //RGB
@@ -119,10 +121,11 @@ function copyToClipboard(text) {
 }
 
 function setColorsToHash(colors = []) {
-  document.location.hash = colors.map((color) => {
-    return color.toString().replace(/#/g, '');
-  })
-  .join('-');
+  document.location.hash = colors
+    .map((color) => {
+      return color.toString().replace(/#/g, '');
+    })
+    .join('-');
 }
 
 function getColorsFromHash() {
@@ -139,12 +142,12 @@ function getColorsFromHash() {
 function setTitleColors() {
   pageTitle.style.background = `linear-gradient(45deg, ${generateRandomColor()}, ${generateRandomColor()}, ${generateRandomColor()})`;
   pageTitle.style.webkitBackgroundClip = 'text';
-  pageTitle.style.webkitTextFillColor = 'transparent'
+  pageTitle.style.webkitTextFillColor = 'transparent';
 }
 
 function setRandomColors(isInitial) {
   const colors = isInitial ? getColorsFromHash() : [];
-  
+
   columns.forEach((column, index) => {
     const isLocked = column.querySelector('.matcher__btn-icon').classList.contains('lock');
     const codeElement = column.querySelector('.matcher__color-code');
@@ -166,8 +169,8 @@ function setRandomColors(isInitial) {
     setBcgColor(lockElement, randomColor);
     setTextColor(codeElement, randomColor);
   });
-  setTitleColors()
-  setColorsToHash(colors)
+  setTitleColors();
+  setColorsToHash(colors);
 }
 
 setRandomColors(true);
