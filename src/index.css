@@ -25,7 +25,8 @@
   grid-template-rows: max-content 1fr;
   grid-template-areas: 
   'title'
-  'container';
+  'container'
+  'caption';
 }
 
 .matcher__title {
@@ -38,7 +39,46 @@
   font-size: 3rem;
   line-height: 3.5rem;
   letter-spacing: 0.04rem; 
-  animation: flicker 2.5s linear infinite;
+  animation: gradientRotate 3s linear infinite;
+}
+
+.matcher__title::before {
+  position: absolute;
+  content: '';
+  top: -15px;
+  left: -15px;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.matcher__caption {
+  position: fixed;
+  bottom: 20px;
+  display: block;
+  justify-self: center;
+  grid-area: caption;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3rem;
+  line-height: 3.5rem;
+  letter-spacing: 0.04rem; 
+  color: #fff;
+  animation: flicker 3s linear infinite;
+}
+
+.matcher__caption::before {
+  position: absolute;
+  content: '';
+  top: -15px;
+  left: -15px;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 }
 
 .matcher__container {
@@ -105,6 +145,15 @@
 
 .matcher__btn:hover .matcher__btn-icon {
   transform: scale(1.1);
+}
+
+@keyframes gradientRotate {
+  from {
+    filter: hue-rotate(0)
+  }
+  to{
+    filter: hue-rotate(360deg);
+  }
 }
 
 @keyframes flicker {
