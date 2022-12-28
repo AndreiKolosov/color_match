@@ -1,9 +1,12 @@
+export interface IColorModels {
+  hexFormat: string;
+  rgbFormat: string;
+  hslFormat: string;
+}
+
 export interface IColor {
   id: string;
-  hex: string;
-  rgb: string;
-  hsl: string;
+  models: IColorModels;
   luminance: number;
   isSelected: boolean;
-  changeColor: () => IColor;
 }

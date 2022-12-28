@@ -3,23 +3,29 @@ import styles from './Column.module.css';
 import { IColumnProps } from './Column.props';
 import UnlockIcon from '../Icons/UnlockIcon/UnlockIcon';
 import LockIcon from '../Icons/LockIcon/LockIcon';
+import { copyToClipBoard } from '../../utils';
 
-const Column: FC<IColumnProps> = ({ colorObj, onLockClick }) => {
-  const { hex, luminance, isSelected, id } = colorObj;
-  const textColor = luminance > 50 ? '#000' : '#FFF';
+const Column: FC<IColumnProps> = ({ colorObj, onLockClick }) => { 
+  const { models, luminance, isSelected, id } = colorObj;
+  const { hexFormat } = models;
+  const frontItemsColor = luminance > 50 ? '#000' : '#FFF';
 
   return (
-    <li className={styles.column} style={{ background: hex }}>
-      <span className={styles.column__code} style={{ color: textColor }}>
-        {hex}
+    <li className={styles.column} style={{ background: hexFormat }}>
+      <span
+        className={styles.column__code}
+        style={{ color: frontItemsColor }}
+        onClick={() => copyToClipBoard(hexFormat)}
+      >
+        {hexFormat}
       </span>
       <button className={styles.column__btn} type="button" onClick={() => onLockClick(id)}>
         {isSelected ? (
-          <LockIcon fill={textColor} className={styles.column__btnIcon} />
+          <LockIcon fill={frontItemsColor} className={styles.column__btnIcon} />
         ) : (
-          <UnlockIcon fill={textColor} className={styles.column__btnIcon} />
+          <UnlockIcon fill={frontItemsColor} className={styles.column__btnIcon} />
         )}
-      </button>
+      </button> 
     </li>
   );
 }

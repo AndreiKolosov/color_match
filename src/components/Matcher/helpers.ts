@@ -1,14 +1,32 @@
+import { createId } from './../../utils/index';
+import { generateRandomHexColor, hexToRGB, rgbToHsl, extractColorLuminance } from '../../utils/color';
 import { IColor } from './../../types/color';
-import { Color } from './Color';
 
-export const createColorsArr = (qty: number): IColor[] => {
+export const createColorItem = (): IColor => {
+  const hexColor = generateRandomHexColor();
+  const rgbColor = hexToRGB(hexColor);
+  const hslColor = rgbToHsl(rgbColor);
+
+  return ({
+    id: createId(),
+    models: {
+      hexFormat: hexColor,
+      rgbFormat: rgbColor,
+      hslFormat: hslColor,
+    },
+    luminance: extractColorLuminance(hslColor),
+    isSelected: false,
+  })
+}
+
+export const createColorsItemArr = (qty: number): IColor[] => {
   const colors: IColor[] = [];
 
   for (let i = 0; i < qty; i++) {
-    const color = new Color();
+    const color = createColorItem();
     colors.push(color);
   }
-
+  
   return colors;
 };
 
@@ -17,14 +35,12 @@ export const resetColors = (colors: IColor[]): IColor[] => {
     if (color.isSelected) {
       return color;
     } else {
-      return color.changeColor();
+      return createColorItem();
     }
   })
 }
 
 export const toggleSelectedState = (colors: IColor[], id: string) => {
-  console.log(id);
-  
   return colors.map((color) => {
     if(color.id === id) {
       return ({

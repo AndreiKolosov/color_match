@@ -67,7 +67,7 @@ export function rgbToHsl(rgb: string) {
   return `hsl(${h}, ${s}%, ${l}%)`
 }
 
-export const getColorLuminance = (hslColor: string): number => {
+export const extractColorLuminance = (hslColor: string): number => {
   const [, , lightness] = hslColor
     .replace(/[rgb()\s%]/g, '')
     .split(',')
