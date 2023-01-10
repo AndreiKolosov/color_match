@@ -3,7 +3,7 @@ export const createId = () => 'id' + Math.random().toString(16).slice(2);
 
 export const copyToClipBoard = (str: string) => {
   return navigator.clipboard.writeText(str);
-}
+};
 
 export const setColorsToHash = (colors: IColor[] = []) => {
   document.location.hash = colors
@@ -11,9 +11,9 @@ export const setColorsToHash = (colors: IColor[] = []) => {
       return color.models.hexFormat.toString().replace(/#/g, '');
     })
     .join('-');
-}
+};
 
-export const getColorsFromHash = () => {
+export const getColorsFromHash = (): string[] | null => {
   if (document.location.hash.length > 1) {
     return document.location.hash
       .replace(/#/g, '')
@@ -21,5 +21,5 @@ export const getColorsFromHash = () => {
       .map((color) => `#${color}`);
   }
 
-  return [];
-}
+  return null;
+};

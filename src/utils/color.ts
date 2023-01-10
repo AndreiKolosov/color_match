@@ -16,15 +16,15 @@ export function hexToRGB(hex: string): string {
     b = '0x' + hex[5] + hex[6];
   }
 
-  return `rgb(${+r}, ${+g}, ${+b})`
+  return `rgb(${+r}, ${+g}, ${+b})`;
 }
 
 export function rgbToHsl(rgb: string) {
   let [r, g, b] = rgb
     .replace(/[rgb()\s]/g, '')
     .split(',')
-    .map(str => Number(str));
-  
+    .map((str) => Number(str));
+
   r /= 255;
   g /= 255;
   b /= 255;
@@ -51,11 +51,11 @@ export function rgbToHsl(rgb: string) {
         h = (r - g) / d + 4;
         break;
     }
-    
-    if(h) {
+
+    if (h) {
       h /= 6;
     } else {
-      h = 0 
+      h = 0;
     }
   }
 
@@ -63,8 +63,7 @@ export function rgbToHsl(rgb: string) {
   s = Math.round(s * 100);
   l = Math.round(l * 100);
 
-
-  return `hsl(${h}, ${s}%, ${l}%)`
+  return `hsl(${h}, ${s}%, ${l}%)`;
 }
 
 export const extractColorLuminance = (hslColor: string): number => {
@@ -72,9 +71,9 @@ export const extractColorLuminance = (hslColor: string): number => {
     .replace(/[rgb()\s%]/g, '')
     .split(',')
     .map((str) => Number(str));
-  
-  return lightness; 
-}
+
+  return lightness;
+};
 
 export const generateRandomHexColor = (): string => {
   //RGB

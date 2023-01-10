@@ -2,32 +2,30 @@ import { createId } from './../../utils/index';
 import { generateRandomHexColor, hexToRGB, rgbToHsl, extractColorLuminance } from '../../utils/color';
 import { IColor } from './../../types/color';
 
-export const createColorItem = (): IColor => {
-  const hexColor = generateRandomHexColor();
-  const rgbColor = hexToRGB(hexColor);
+export const generateHexArr = (qty: number) => {
+  const hexCodesArr: string[] = [];
+
+  for (let i = 0; i < qty; i++) {
+    hexCodesArr.push(generateRandomHexColor());
+  }
+
+  return hexCodesArr;
+};
+
+export const createColorItem = (hexCode: string): IColor => {
+  const rgbColor = hexToRGB(hexCode);
   const hslColor = rgbToHsl(rgbColor);
 
-  return ({
+  return {
     id: createId(),
     models: {
-      hexFormat: hexColor,
+      hexFormat: hexCode,
       rgbFormat: rgbColor,
       hslFormat: hslColor,
     },
     luminance: extractColorLuminance(hslColor),
     isSelected: false,
-  })
-}
-
-export const createColorsItemArr = (qty: number): IColor[] => {
-  const colors: IColor[] = [];
-
-  for (let i = 0; i < qty; i++) {
-    const color = createColorItem();
-    colors.push(color);
-  }
-  
-  return colors;
+  };
 };
 
 export const resetColors = (colors: IColor[]): IColor[] => {
@@ -35,20 +33,20 @@ export const resetColors = (colors: IColor[]): IColor[] => {
     if (color.isSelected) {
       return color;
     } else {
-      return createColorItem();
+      return createColorItem(generateRandomHexColor());
     }
-  })
-}
+  });
+};
 
 export const toggleSelectedState = (colors: IColor[], id: string) => {
   return colors.map((color) => {
-    if(color.id === id) {
-      return ({
+    if (color.id === id) {
+      return {
         ...color,
         isSelected: !color.isSelected,
-      });
+      };
     } else {
       return color;
     }
-  })
-}
+  });
+};
