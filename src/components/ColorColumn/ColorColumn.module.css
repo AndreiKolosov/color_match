@@ -1,0 +1,88 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.column__code {
+  display: block;
+  position: relative;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 1;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.4s ease-in;
+}
+
+.column__code:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.column__code:hover.column__code::before {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  content: 'Click to copy';
+  width: 70px;
+  min-height: 12px;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.column__code:hover.column__code::after {
+  position: absolute;
+  content: '';
+  border: 8px solid transparent;
+  border-top: 8px solid rgba(0, 0, 0, 0.2);
+  top: -13px;
+  right: 50px;
+}
+
+.column__btn {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  transition: background 0.3s ease-in;
+}
+
+.column__btn:disabled {
+  opacity: 0.5;
+}
+
+.column__btn:disabled.column__btn::after {
+  position: absolute;
+  content: '';
+  width: 90%;
+  height: 3px;
+  background-color: red;
+  transform: rotate(-45deg) translate(-5px, -25px);
+}
+
+.column__btnIcon {
+  min-width: 100%;
+  min-height: 100%;
+  display: block;
+  transition: transform 0.4s ease-in;
+}
+
+.column__btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.column__btn:hover .matcher__btn-icon {
+  transform: scale(1.1);
+}

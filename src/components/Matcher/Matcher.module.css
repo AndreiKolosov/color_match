@@ -5,7 +5,7 @@
   grid-template-rows: max-content 1fr;
   grid-template-areas: 
   'title'
-  'container'
+  'list'
   'caption';
 }
 
@@ -36,6 +36,7 @@
 
 .matcher__caption {
   position: fixed;
+  z-index: 1;
   bottom: 20px;
   display: block;
   justify-self: center;
@@ -50,6 +51,7 @@
 }
 
 .matcher__caption::before {
+  z-index: -1;
   position: absolute;
   content: '';
   top: -15px;
@@ -61,71 +63,78 @@
   border-radius: 10px;
 }
 
-.matcher__container {
-  grid-area: container;
+.matcher__colorsList {
+  grid-area: list;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-template-rows: 1fr;
 }
 
-.matcher__column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+.matcher__plusBtnIcon {
+  fill: #fff;
 }
 
-.matcher__color-code {
-  position: relative;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 1;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background 0.3s ease-in;
-}
-
-
-.matcher__color-code:hover {
+.matcher__plusBtn {
+  position: fixed;
+  top: 4%;
+  right: 4%;
+  width: fit-content;
   background-color: rgba(0, 0, 0, 0.1);
-}
-
-
-.matcher__btn {
-  width: 50px;
-  height: 50px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: transparent;
-  outline: none;
   border: none;
+  padding: 5px;
   border-radius: 10px;
-  transition: background 0.3s ease-in;
+  transition: background-color 0.3s ease-in;
 }
 
-
-.matcher__btn-icon {
-  min-width: 100%;
-  min-height: 100%;
-  display: block;
-  mask-image: url("../../images/icons/lock-open-solid.svg");
-  -webkit-mask-box-image: url("../../images/icons/lock-open-solid.svg");
-  background-color: #fff;
-  transition: transform 0.4s ease-in;
+.matcher__plusBtn:hover {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
-.lock {
-  mask-image: url("../../images/icons/lock-solid.svg");
-  -webkit-mask-box-image: url("../../images/icons/lock-solid.svg");
+.matcher__plusBtn:hover.matcher__plusBtn::after {
+  position: absolute;
+  bottom: -35px;
+  left: 0;
+  content: 'Add column';
+  width: 70px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 0.75rem;
+  color: #fff;
+  padding: 3px;
+  border-radius: 5px;
 }
 
-
-.matcher__btn:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+.matcher__plusBtn:hover.matcher__plusBtn::before {
+  position: absolute;
+  content: '';
+  border: 8px solid transparent;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.3);
+  bottom: -14px;
+  left: 10px;
 }
 
-.matcher__btn:hover .matcher__btn-icon {
-  transform: scale(1.1);
+@keyframes flicker {
+    0% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0.3;
+    }
+}
+
+@keyframes gradientRotate {
+  from {
+    filter: hue-rotate(0)
+  }
+  to{
+    filter: hue-rotate(360deg);
+  }
 }
