@@ -69,8 +69,51 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   grid-template-rows: 1fr;
+}
+
+.matcher__plusBtnIcon {
+  fill: #fff;
+}
+
+.matcher__plusBtn {
+  position: fixed;
+  top: 4%;
+  right: 4%;
+  width: fit-content;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: none;
+  padding: 5px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in;
+}
+
+.matcher__plusBtn:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.matcher__plusBtn:hover.matcher__plusBtn::after {
+  position: absolute;
+  bottom: -35px;
+  left: 0;
+  content: 'Add column';
+  width: 70px;
+  height: 15px;
+  background-color: rgba(0, 0, 0, 0.3);
+  font-size: 0.75rem;
+  color: #fff;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.matcher__plusBtn:hover.matcher__plusBtn::before {
+  position: absolute;
+  content: '';
+  border: 8px solid transparent;
+  border-bottom: 8px solid rgba(0, 0, 0, 0.3);
+  bottom: -14px;
+  left: 10px;
 }
 
 @keyframes flicker {

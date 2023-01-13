@@ -1,11 +1,12 @@
 import { FC } from 'react';
-import styles from './Column.module.css';
-import { IColumnProps } from './Column.props';
+import styles from './ColorColumn.module.css';
+import { IColorColumnProps } from './ColorColumn.props';
 import UnlockIcon from '../Icons/UnlockIcon/UnlockIcon';
 import LockIcon from '../Icons/LockIcon/LockIcon';
 import { copyToClipBoard } from '../../utils';
+import DeleteIcon from '../Icons/DeleteIcon/DeleteIcon';
 
-const Column: FC<IColumnProps> = ({ colorObj, onLockClick }) => { 
+const ColorColumn: FC<IColorColumnProps> = ({ colorObj, canRemove, onLockClick, onDeleteClick }) => {
   const { models, luminance, isSelected, id } = colorObj;
   const { hexFormat } = models;
   const frontItemsColor = luminance > 50 ? '#000' : '#FFF';
@@ -25,9 +26,12 @@ const Column: FC<IColumnProps> = ({ colorObj, onLockClick }) => {
         ) : (
           <UnlockIcon fill={frontItemsColor} className={styles.column__btnIcon} />
         )}
-      </button> 
+      </button>
+      <button className={styles.column__btn} disabled={!canRemove} type="button" onClick={() => onDeleteClick(id)}>
+        <DeleteIcon fill={frontItemsColor} className={styles.column__btnIcon} />
+      </button>
     </li>
   );
-}
+};
 
-export default Column;
+export default ColorColumn;

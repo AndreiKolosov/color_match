@@ -1,12 +1,40 @@
 import { FC, useState, useEffect, KeyboardEvent } from 'react';
 import styles from './Matcher.module.css';
-import Column from '../Column/Column';
+import ColorColumn from '../ColorColumn/ColorColumn';
 import { IColor } from '../../types/color';
 import { createColorItem, generateHexArr, resetColors, toggleSelectedState } from './helpers';
 import { setColorsToHash, getColorsFromHash } from '../../utils';
+import PlusIcon from '../Icons/PlusIcon/PlusIcon';
+import { generateRandomHexColor } from '../../utils/color';
 
 const Matcher: FC = () => {
   const [colorsItemArr, setColorsItemArr] = useState<IColor[]>([]);
+  const maxColumnsQty = 7;
+  const minColumnsQty = 4;
+
+  const addColorColumn = () => {
+    if (colorsItemArr.length < maxColumnsQty) {
+      setColorsItemArr((prevColors) => {
+        const newColorsArr = [...prevColors, createColorItem(generateRandomHexColor())];
+
+        setColorsToHash(newColorsArr);
+
+        return newColorsArr;
+      });
+    }
+  };
+
+  const deleteColorColumn = (colorId: string) => {
+    if (colorsItemArr.length > minColumnsQty) {
+      setColorsItemArr((prevColors) => {
+        const newColorsArr = prevColors.filter(({ id }) => id !== colorId);
+
+        setColorsToHash(newColorsArr);
+
+        return newColorsArr;
+      });
+    }
+  };
 
   const changeColors = (e: KeyboardEvent<HTMLElement>): void => {
     if (e.code.toLowerCase() === 'space') {
@@ -33,13 +61,22 @@ const Matcher: FC = () => {
 
   return (
     <section className={styles.matcher} onKeyDown={(e) => changeColors(e)} tabIndex={0}>
-      {/* <h1 className={styles.matcher__title}>Match The Color !</h1> */}
       <ul className={styles.matcher__colorsList}>
         {colorsItemArr.map((color) => (
-          <Column key={color.id} colorObj={color} onLockClick={toggleLock} />
+          <ColorColumn
+            key={color.id}
+            colorObj={color}
+            canRemove={colorsItemArr.length > minColumnsQty}
+            onLockClick={toggleLock}
+            onDeleteClick={deleteColorColumn}
+          />
         ))}
       </ul>
-      {/* <span className={styles.matcher__caption}>Press «space»</span> */}
+      {colorsItemArr.length < maxColumnsQty && (
+        <button className={styles.matcher__plusBtn} type="button" onClick={() => addColorColumn()}>
+          <PlusIcon className={styles.matcher__plusBtnIcon} />
+        </button>
+      )}
     </section>
   );
 };
