@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/color_match/static/css/main.6d4af24e.css",
+    "main.js": "/color_match/static/js/main.5735b44f.js",
+    "static/media/Roboto-Regular.woff": "/color_match/static/media/Roboto-Regular.774f99460b8c31560a3c.woff",
+    "static/media/Roboto-Regular.woff2": "/color_match/static/media/Roboto-Regular.9429985be4f46ec8fcfc.woff2",
+    "index.html": "/color_match/index.html",
+    "main.6d4af24e.css.map": "/color_match/static/css/main.6d4af24e.css.map",
+    "main.5735b44f.js.map": "/color_match/static/js/main.5735b44f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d4af24e.css",
+    "static/js/main.5735b44f.js"
+  ]
+}
