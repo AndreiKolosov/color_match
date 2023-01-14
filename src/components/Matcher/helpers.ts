@@ -1,4 +1,4 @@
-import { createId } from './../../utils/index';
+import { createId, setColorsToHash } from './../../utils/index';
 import { generateRandomHexColor, hexToRGB, rgbToHsl, extractColorLuminance } from '../../utils/color';
 import { IColor } from './../../types/color';
 
@@ -29,18 +29,22 @@ export const createColorItem = (hexCode: string): IColor => {
 };
 
 export const resetColors = (colors: IColor[]): IColor[] => {
-  return colors.map((color) => {
+  const newColors = colors.map((color) => {
     if (color.isSelected) {
       return color;
     } else {
       return createColorItem(generateRandomHexColor());
     }
   });
+
+  setColorsToHash(newColors);
+
+  return newColors;
 };
 
-export const toggleSelectedState = (colors: IColor[], id: string) => {
+export const toggleSelectedState = (colors: IColor[], colorId: string): IColor[] => {
   return colors.map((color) => {
-    if (color.id === id) {
+    if (color.id === colorId) {
       return {
         ...color,
         isSelected: !color.isSelected,
@@ -49,4 +53,20 @@ export const toggleSelectedState = (colors: IColor[], id: string) => {
       return color;
     }
   });
+};
+
+export const deleteColorFromState = (colors: IColor[], colorId: string): IColor[] => {
+  const newColorsArr = colors.filter(({ id }) => id !== colorId);
+
+  setColorsToHash(newColorsArr);
+
+  return newColorsArr;
+};
+
+export const addNewColorToState = (colors: IColor[]): IColor[] => {
+  const newColorsArr = [...colors, createColorItem(generateRandomHexColor())];
+
+  setColorsToHash(newColorsArr);
+
+  return newColorsArr;
 };

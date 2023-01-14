@@ -2,10 +2,10 @@ import { FC, useState, useEffect, KeyboardEvent } from 'react';
 import styles from './Matcher.module.css';
 import ColorColumn from '../ColorColumn/ColorColumn';
 import { IColor } from '../../types/color';
-import { createColorItem, generateHexArr, resetColors, toggleSelectedState } from './helpers';
-import { setColorsToHash, getColorsFromHash } from '../../utils';
+import { addNewColorToState, createColorItem, deleteColorFromState, generateHexArr, resetColors, toggleSelectedState } from './helpers';
+import { getColorsFromHash } from '../../utils';
 import PlusIcon from '../Icons/PlusIcon/PlusIcon';
-import { generateRandomHexColor } from '../../utils/color';
+import CollapsibleMenu from '../CollapsibleMenu/CollapsibleMenu';
 
 const Matcher: FC = () => {
   const [colorsItemArr, setColorsItemArr] = useState<IColor[]>([]);
@@ -14,43 +14,25 @@ const Matcher: FC = () => {
 
   const addColorColumn = () => {
     if (colorsItemArr.length < maxColumnsQty) {
-      setColorsItemArr((prevColors) => {
-        const newColorsArr = [...prevColors, createColorItem(generateRandomHexColor())];
-
-        setColorsToHash(newColorsArr);
-
-        return newColorsArr;
-      });
+      setColorsItemArr((prevColors) => addNewColorToState(prevColors));
     }
   };
 
   const deleteColorColumn = (colorId: string) => {
     if (colorsItemArr.length > minColumnsQty) {
-      setColorsItemArr((prevColors) => {
-        const newColorsArr = prevColors.filter(({ id }) => id !== colorId);
-
-        setColorsToHash(newColorsArr);
-
-        return newColorsArr;
-      });
+      setColorsItemArr((prevColors) => deleteColorFromState(prevColors, colorId));
     }
   };
 
   const changeColors = (e: KeyboardEvent<HTMLElement>): void => {
     if (e.code.toLowerCase() === 'space') {
       e.preventDefault();
-      setColorsItemArr((prevColors) => {
-        const newColors = resetColors(prevColors);
-
-        setColorsToHash(newColors);
-
-        return newColors;
-      });
+      setColorsItemArr((prevColors) => resetColors(prevColors));
     }
   };
 
-  const toggleLock = (id: string) => {
-    setColorsItemArr((prevColors) => toggleSelectedState(prevColors, id));
+  const toggleLock = (colorId: string) => {
+    setColorsItemArr((prevColors) => toggleSelectedState(prevColors, colorId));
   };
 
   useEffect(() => {
@@ -77,6 +59,7 @@ const Matcher: FC = () => {
           <PlusIcon className={styles.matcher__plusBtnIcon} />
         </button>
       )}
+      <CollapsibleMenu className={styles.matcher__hintMenu}/>
     </section>
   );
 };
